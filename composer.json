@@ -1,0 +1,31 @@
+{
+    "name": "phly/phly-peep",
+    "description": "Rudimentary twitter clone to demonstrate ZF2 modules",
+    "type": "library",
+    "keywords": [
+        "zf2",
+        "zend",
+        "module"
+    ],
+    "homepage": "https://github.com/weierophinney/PhlyPeep",
+    "authors": [
+        {
+            "name": "Matthew Weier O'Phinney",
+            "email": "matthew@weierophinney.net",
+            "homepage": "http://mwop.net/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "dev-master",
+        "zf-commons/zfc-user": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "PhlyPeep": "src/"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}
