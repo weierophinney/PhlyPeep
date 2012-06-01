@@ -9,7 +9,7 @@ $url      = $this->url('phly-peep/user', array('username' => $username));
             <li><a href="<?php echo $url ?>"><?php echo $this->gravatar($peep->getEmail()) ?></a></li>
         </ul>
     </div>
-    <div class="span5">
+    <div class="span4">
     <?php 
         $displayName = $this->peep->getDisplayName();
         $displayName = $displayName ?: $username;
