@@ -8,7 +8,7 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'peep' => array(
+            'phly-peep' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route'    => '/peep',
