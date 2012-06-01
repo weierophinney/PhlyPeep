@@ -9,7 +9,7 @@ class PeepText extends AbstractHelper
     protected function filterLinks($text)
     {
         return preg_replace_callback(
-            '#(http://[a-zA-Z0-9_%&~@/\#.-]+)#', 
+            '#(https?://[a-zA-Z0-9_%&~@/\#.-]+)#', 
             array($this, 'markupLink'), 
             $text
         );
