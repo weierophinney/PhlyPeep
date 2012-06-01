@@ -66,8 +66,9 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
+            'peepform'          => 'PhlyPeep\Service\PeepViewFormFactory',
             'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',
+            'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
         ),
     ),
 );

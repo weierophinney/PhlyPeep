@@ -1,0 +1,24 @@
+<?php
+
+namespace PhlyPeep\View;
+
+use Zend\View\Helper\AbstractHelper;
+
+class PeepForm extends AbstractHelper
+{
+    protected $auth;
+
+    public function setAuthService(AuthenticationService $auth)
+    {
+        $this->auth = $auth;
+    }
+
+    public function __invoke($form, $template = 'phly-peep/peep/form')
+    {
+        if (!$this->auth || $this->auth->hasIdentity()) {
+            return '';
+        }
+
+        return $this->view->render($template, array('form' => $form));
+    }
+}
