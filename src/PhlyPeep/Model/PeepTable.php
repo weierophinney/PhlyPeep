@@ -49,7 +49,7 @@ class PeepTable extends AbstractTableGateway
         return $this->getPeepsFromSelect($select);
     }
 
-    public function fetchUserTimelineCount()
+    public function fetchUserTimelineCount($user)
     {
         $select = $this->getCountSelect();
         $where  = $select->where();
