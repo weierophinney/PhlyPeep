@@ -1,0 +1,18 @@
+<?php
+$form = $this->form;
+$form->setAttributes(array(
+    'method' => 'post',
+    'action' => $this->url('phly-peep/submit'),
+    'class'  => 'well',
+));
+$label = $this->plugin('form_label');
+echo $this->form()->openTag($form);
+
+$peepElement = $form->get('peep_text');
+$peepElement->setAttribute('class', 'span4');
+echo $label->openTag() . $this->escape($peepElement->getAttribute('label')) . $label->closeTag();
+echo $this->formTextarea($peepElement);
+echo $this->formInput($form->get('secure'));
+?>
+<button type="submit" class="btn">Peep!</button>
+<?php echo $this->form()->closeTag() ?>

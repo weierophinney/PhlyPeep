@@ -16,7 +16,7 @@ class PeepForm extends AbstractHelper
     public function __invoke($form, $template = 'phly-peep/peep/form')
     {
         if (!$this->auth || $this->auth->hasIdentity()) {
-            return '';
+            return $this->view->render('phly-peep/peep/register');
         }
 
         return $this->view->render($template, array('form' => $form));

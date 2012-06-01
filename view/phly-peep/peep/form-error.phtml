@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="span12">
+        <h2>Error with your submission</h2>
+        <p class="help-block error">
+            There were one or more errors with your submission; please correct and re-submit!
+        </p>
+<?php
+$form = $this->form;
+$form->setAttributes(array(
+    'method' => 'post',
+    'action' => $this->url('phly-peep/submit'),
+    'class'  => 'well',
+));
+$label = $this->plugin('form_label');
+echo $this->form()->openTag($form);
+
+$peepElement = $form->get('peep_text');
+$peepElement->setAttribute('class', 'span4');
+echo $label->openTag() . $this->escape($peepElement->getAttribute('label')) . $label->closeTag();
+echo $this->formTextarea($peepElement);
+if ($peepElement->getMessages()) {
+    echo '<span class="help-block error">' . $this->formElementErrors($peepElement) . "</span>\n";
+}
+echo $this->formInput($form->get('secure'));
+?>
+<button type="submit" class="btn">Peep!</button>
+<?php echo $this->form()->closeTag() ?>
+    </div>
+</div>

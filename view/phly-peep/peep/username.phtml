@@ -1,0 +1,14 @@
+<?php
+if (!isset($this->username)) {
+    $peep     = $this->peeps->current();
+    $username = $peep->getUsername();
+    $this->username = $username;
+}
+?>
+<div class="row">
+    <div class="span12">
+        <h2>Peeps for <?php echo $this->escape($this->username) ?></h2>
+    </div>
+</div>
+
+<?php echo $this->render('phly-peep/peep/index');

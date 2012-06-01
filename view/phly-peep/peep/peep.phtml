@@ -1,0 +1,32 @@
+<?php
+$peep     = $this->peep;
+$username = $peep->getUsername();
+$url      = $this->url('phly-peep/user', array('username' => $username));
+?>
+<div class="well row peep">
+    <div class="span1">
+        <ul class="thumbnails">
+            <li><a href="<?php echo $url ?>"><?php echo $this->gravatar($peep->getEmail()) ?></a></li>
+        </ul>
+    </div>
+    <div class="span5">
+    <?php 
+        $displayName = $this->peep->getDisplayName();
+        $displayName = $displayName ?: $username;
+    ?>
+        <h4><a href="<?php echo $url ?>"><?php echo $this->escape($displayName) ?></a> <small>@<?php echo $this->escape($username) ?></small></h4>
+        <p><?php echo $this->peepText($peep->getPeepText()) ?></p>
+        <div class="row">
+            <div class="span5 date">
+                <a href="<?php echo $this->url('phly-peep/status', array('identifier' => $peep->getIdentifier())) ?>">
+                <?php
+                $date = new DateTime();
+                $date->setTimestamp($peep->getTimestamp());
+                $date->setTimezone('UTC');
+                echo $date->format('h:i a - d M Y');
+                ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

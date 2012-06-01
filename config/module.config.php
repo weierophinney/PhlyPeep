@@ -65,6 +65,9 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'invokables' => array(
+            'peeptext' => 'PhlyPeep\View\PeepText',
+        ),
         'factories' => array(
             'peepform'          => 'PhlyPeep\Service\PeepViewFormFactory',
             'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',

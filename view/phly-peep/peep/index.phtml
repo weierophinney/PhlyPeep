@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="span6 peeps">
+    <?php if (0 == count($this->peeps)): ?>
+        <h2>Nothing in the timeline!</h2>
+    <?php else: 
+        foreach ($this->peeps as $peep) {
+            echo $this->render('phly-peep/peep/peep', array('peep' => $peep));
+        }
+
+        echo $this->paginationControl($this->peeps, 'Sliding', 'phly-peep/peep/pagination');
+    endif; ?>
+    </div>
+
+    <div class="span6 form">
+        <?php echo $this->peepForm(); ?>
+    </div>
+</div>
