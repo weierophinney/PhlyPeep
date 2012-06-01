@@ -5,6 +5,7 @@ return array(
             'adapter' => 'Zend\Db\Adapter\Adapter',
             'table'   => 'peep',
         ),
+        'page_size' => 20,
     ),
     'router' => array(
         'routes' => array(
@@ -59,8 +60,14 @@ return array(
         ),
     ),
     'controller' => array(
-        'classes' => array(
-            'phly-peep' => 'PhlyPeep\Controller\PeepController',
+        'factories' => array(
+            'phly-peep' => 'PhlyPeep\Service\PeepControllerFactory',
+        ),
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
+            'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',
         ),
     ),
 );
