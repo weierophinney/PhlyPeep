@@ -3,7 +3,7 @@ $form = $this->form;
 $form->setAttributes(array(
     'method' => 'post',
     'action' => $this->url('phly-peep/submit'),
-    'class'  => 'well',
+    'class'  => 'well form-vertical',
 ));
 $label = $this->plugin('form_label');
 echo $this->form()->openTag($form);
@@ -14,5 +14,6 @@ echo $label->openTag() . $this->escape($peepElement->getAttribute('label')) . $l
 echo $this->formTextarea($peepElement);
 echo $this->formInput($form->get('secure'));
 ?>
+<br />
 <button type="submit" class="btn">Peep!</button>
 <?php echo $this->form()->closeTag() ?>

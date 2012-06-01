@@ -2,12 +2,16 @@
 
 namespace PhlyPeep\Model;
 
+use SplObjectStorage;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Expression;
+use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\AbstractTableGateway;
 
 class PeepTable extends AbstractTableGateway
 {
+    protected $peepPrototype;
     protected $table     = 'peep';
     protected $tableName = 'peep';
 
@@ -40,8 +44,9 @@ class PeepTable extends AbstractTableGateway
     {
         $select = $this->getSql()->select();
 
-        $where  = $select->where();
+        $where  = new Where();
         $where->equalTo('username', $user);
+        $select->where($where);
 
         $select->offset($offset)
                ->limit($limit)
@@ -52,8 +57,9 @@ class PeepTable extends AbstractTableGateway
     public function fetchUserTimelineCount($user)
     {
         $select = $this->getCountSelect();
-        $where  = $select->where();
+        $where  = new Where();
         $where->equalTo('username', $user);
+        $select->where($where);
         return $this->getCountFromSelect($select);
     }
 
@@ -84,7 +90,7 @@ class PeepTable extends AbstractTableGateway
     {
         $resultset = $this->selectWith($select);
         $peeps     = new SplObjectStorage();
-        foreach ($resultSet as $row) {
+        foreach ($resultset as $row) {
             $peep = $this->getPeepFromRow($row);
             $peeps->attach($peep);
         }

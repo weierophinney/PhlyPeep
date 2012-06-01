@@ -50,16 +50,19 @@ class PeepController extends ActionController
         }
 
         $peep    = new Model\PeepEntity();
-        $peep->setUsername($identity->getUsername());
-        $peep->setEmail($identity->getEmail());
-        $peep->setDisplayName($identity->getDisplayName());
-
         $form    = new Model\PeepForm();
         $form->bind($peep);
 
-        $request = $this->getRequest();
-        $post    = $request->post();
-        $form->setData($post->toArray());
+        $request              = $this->getRequest();
+        $data                 = $request->post();
+        $data['username']     = $identity->getUsername();
+        $data['email']        = $identity->getEmail();
+        $data['display_name'] = $identity->getDisplayName();
+        $data['timestamp']    = $_SERVER['REQUEST_TIME'];
+        $form->setData($data);
+        $form->setValidationGroup(
+            'peep_text', 'username', 'email', 'display_name', 'timestamp', 'secure'
+        );
 
         if (!$form->isValid()) {
             $viewModel = new ViewModel(array(
@@ -71,17 +74,21 @@ class PeepController extends ActionController
 
         $this->service->insertPeep($peep);
 
-        return $this->redirect()->toRoute('phly-peep/user', array('user' => $identity->getUsername()));
+        return $this->redirect()->toRoute(
+            'phly-peep/user', 
+            array('username' => $identity->getUsername())
+        );
     }
 
     public function usernameAction()
     {
-        $request = $this->getRequest();
-        $username = $request->query()->get('username', false);
+        $routeMatch = $this->getEvent()->getRouteMatch();
+        $username = $routeMatch->getParam('username', false);
         if (!$username) {
             return $this->redirect()->toRoute('phly-peep');
         }
 
+        $request  = $this->getRequest();
         $page = $request->query()->get('page', 1);
 
         return array(
@@ -92,8 +99,8 @@ class PeepController extends ActionController
 
     public function statusAction()
     {
-        $request    = $this->getRequest();
-        $identifier = $request->query()->get('identifier', false);
+        $routeMatch = $this->getEvent()->getRouteMatch();
+        $identifier = $routeMatch->getParam('identifier', false);
         if (!$identifier) {
             return $this->redirect()->toRoute('phly-peep');
         }

@@ -18,7 +18,7 @@ class PeepFilter extends InputFilter
                 array(
                     'name' => 'Regex',
                     'options' => array(
-                        'regex' => '/^[a-zA-Z0-9]{8}$/',
+                        'pattern' => '/^[a-zA-Z0-9]{8}$/',
                     ),
                 ),
             ),
@@ -34,7 +34,7 @@ class PeepFilter extends InputFilter
                 array(
                     'name' => 'Regex',
                     'options' => array(
-                        'regex' => '/^[a-zA-Z0-9_]+$',
+                        'pattern' => '/^[a-zA-Z0-9_]+$/',
                     ),
                 ),
             ),

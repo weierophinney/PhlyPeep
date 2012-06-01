@@ -94,7 +94,7 @@ class PeepEntity implements
         if (null === $this->identifier) {
             $username  = $this->getUsername();
             $timestamp = $this->getTimestamp();
-            if ($username && $getTimestamp) {
+            if ($username && $timestamp) {
                 $this->setIdentifier(hash('crc32', $username . ':' . $timestamp));
             }
         }

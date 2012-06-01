@@ -2,6 +2,8 @@
 
 namespace PhlyPeep\Model;
 
+use Zend\Paginator\Paginator;
+
 class PeepService
 {
     protected $pageSize = 20;

@@ -22,7 +22,7 @@ $url      = $this->url('phly-peep/user', array('username' => $username));
                 <?php
                 $date = new DateTime();
                 $date->setTimestamp($peep->getTimestamp());
-                $date->setTimezone('UTC');
+                $date->setTimezone(new DateTimezone('UTC'));
                 echo $date->format('h:i a - d M Y');
                 ?>
                 </a>

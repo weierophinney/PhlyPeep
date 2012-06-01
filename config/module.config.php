@@ -48,7 +48,7 @@ return array(
                         'options' => array(
                             'route' => '/status/:identifier',
                             'constraints' => array(
-                                'identifier' => '[a-zA-Z][0-9]{8}',
+                                'identifier' => '[a-zA-Z0-9]{8}',
                             ),
                             'defaults' => array(
                                 'action' => 'status',
@@ -72,6 +72,11 @@ return array(
             'peepform'          => 'PhlyPeep\Service\PeepViewFormFactory',
             'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',
             'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
+        ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'phly-peep' => __DIR__ . '/../view',
         ),
     ),
 );
