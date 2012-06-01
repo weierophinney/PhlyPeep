@@ -30,6 +30,12 @@ class PeepTable extends AbstractTableGateway
         return $this->getPeepsFromSelect($select);
     }
 
+    public function fetchTimelineCount()
+    {
+        $select = $this->getCountSelect();
+        return $this->getCountFromSelect($select);
+    }
+
     public function fetchUserTimeline($user, $offset = 0, $limit = 20)
     {
         $select = $this->getSql()->select();
@@ -41,6 +47,14 @@ class PeepTable extends AbstractTableGateway
                ->limit($limit)
                ->order('timestamp DESC');
         return $this->getPeepsFromSelect($select);
+    }
+
+    public function fetchUserTimelineCount()
+    {
+        $select = $this->getCountSelect();
+        $where  = $select->where();
+        $where->equalTo('username', $user);
+        return $this->getCountFromSelect($select);
     }
 
     public function fetchPeep($identifier)
@@ -82,5 +96,22 @@ class PeepTable extends AbstractTableGateway
         $peep = clone $this->peepPrototype;
         $peep->exchangeArray($row);
         return $peep;
+    }
+
+    protected function getCountSelect()
+    {
+        $select = $this->getSql()->select();
+        $select->columns(array('peeps' => new Expression('COUNT(identifier)')));
+        return $select;
+    }
+
+    protected function getCountFromSelect($select)
+    {
+        $resultset = $this->selectWith($select);
+        if (!count($resultset)) {
+            throw new \DomainException('Unable to determine timeline count!');
+        }
+        $row = $resultset->current();
+        return $row['peeps'];
     }
 }
