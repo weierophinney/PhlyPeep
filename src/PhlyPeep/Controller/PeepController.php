@@ -29,6 +29,7 @@ class PeepController extends ActionController
         $page    = $request->query()->get('page', 1);
         return array(
             'peeps' => $this->service->fetchTimeline($page),
+            'test' => 'some result',
         );
     }
 
