@@ -37,11 +37,15 @@ class PeepPaginator implements PaginatorAdapter
 
     public function getItems($offset, $itemCountPerPage)
     {
+        $result = null;
         switch ($this->timelineType) {
             case self::TYPE_ALL:
-                return $this->table->fetchTimeline($offset, $itemCountPerPage);
+                $result = $this->table->fetchTimeline($offset, $itemCountPerPage);
+                break;
             case self::TYPE_USER:
-                return $this->table->fetchUserTimeline($this->user, $offset, $itemCountPerPage);
+                $result = $this->table->fetchUserTimeline($this->user, $offset, $itemCountPerPage);
+                break;
         }
+        return $result;
     }
 }
