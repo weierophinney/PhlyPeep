@@ -1,9 +1,13 @@
-<?php if ($this->pageCount): ?>
+<?php 
+$paginationInfo = $this->placeholder('phly-peep-pagination');
+$baseUrl        = $this->url($paginationInfo->route, $paginationInfo->params);
+
+if ($this->pageCount): ?>
 <div class="pagination"><ul>
 
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
-  <li><a href="<?php echo $this->url('phly-peep'); ?>?page=<?php echo $this->previous ?>">Prev</a></li>
+  <li><a href="<?php echo $baseUrl; ?>?page=<?php echo $this->previous ?>">Prev</a></li>
 <?php else: ?>
   <li><a href="#">Prev</a></li>
 <?php endif; ?>
@@ -11,7 +15,7 @@
 <!-- Numbered page links -->
 <?php foreach ($this->pagesInRange as $page): ?>
   <?php if ($page != $this->current): ?>
-    <li><a href="<?php echo $this->url('phly-peep') ?>?page=<?php echo $page ?>"><?php echo $page; ?></a></li>
+    <li><a href="<?php echo $baseUrl ?>?page=<?php echo $page ?>"><?php echo $page; ?></a></li>
   <?php else: ?>
     <li class="active"><a href="#"><?php echo $page; ?></a></li>
   <?php endif; ?>
@@ -19,7 +23,7 @@
  
 <!-- Next page link -->
 <?php if (isset($this->next)): ?>
-  <li><a href="<?php echo $this->url('phly-peep'); ?>?page=<?php echo $this->next ?>">Next</a></li>
+  <li><a href="<?php echo $baseUrl; ?>?page=<?php echo $this->next ?>">Next</a></li>
 <?php else: ?>
   <li><a href="#">Next</a></li>
 <?php endif; ?>

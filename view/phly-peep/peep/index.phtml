@@ -7,6 +7,11 @@
             echo $this->render('phly-peep/peep/peep', array('peep' => $peep));
         }
 
+        $paginationInfo = $this->placeholder('phly-peep-pagination');
+        if (!isset($paginationInfo->route)) {
+            $paginationInfoInfo->route  = 'phly-peep';
+            $paginationInfoInfo->params = array();
+        }
         echo $this->paginationControl($this->peeps, 'Sliding', 'phly-peep/peep/pagination');
     endif; ?>
     </div>

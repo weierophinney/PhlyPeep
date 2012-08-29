@@ -11,4 +11,9 @@ if (!isset($this->username)) {
     </div>
 </div>
 
-<?php echo $this->render('phly-peep/peep/index');
+<?php 
+$paginationInfo = $this->placeholder('phly-peep-pagination');
+$paginationInfo->route  = 'phly-peep/user';
+$paginationInfo->params = array('username' => $this->username);
+
+echo $this->render('phly-peep/peep/index');
