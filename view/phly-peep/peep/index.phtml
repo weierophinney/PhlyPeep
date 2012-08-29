@@ -9,8 +9,8 @@
 
         $paginationInfo = $this->placeholder('phly-peep-pagination');
         if (!isset($paginationInfo->route)) {
-            $paginationInfoInfo->route  = 'phly-peep';
-            $paginationInfoInfo->params = array();
+            $paginationInfo->route  = 'phly-peep';
+            $paginationInfo->params = array();
         }
         echo $this->paginationControl($this->peeps, 'Sliding', 'phly-peep/peep/pagination');
     endif; ?>
