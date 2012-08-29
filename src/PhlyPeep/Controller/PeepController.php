@@ -4,11 +4,11 @@ namespace PhlyPeep\Controller;
 
 use PhlyPeep\Model;
 use Zend\Authentication\AuthenticationService;
-use Zend\Mvc\Controller\ActionController;
+use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use ZfcUser\Model\User;
+use ZfcUser\Entity\User;
 
-class PeepController extends ActionController
+class PeepController extends AbstractActionController
 {
     protected $auth;
     protected $service;
@@ -26,7 +26,7 @@ class PeepController extends ActionController
     public function indexAction()
     {
         $request = $this->getRequest();
-        $page    = $request->query()->get('page', 1);
+        $page    = $request->getQuery()->get('page', 1);
         return array(
             'peeps' => $this->service->fetchTimeline($page),
         );
@@ -50,11 +50,11 @@ class PeepController extends ActionController
         }
 
         $peep    = new Model\PeepEntity();
-        $form    = new Model\PeepForm();
+        $form    = Model\PeepForm::factory($peep);
         $form->bind($peep);
 
         $request              = $this->getRequest();
-        $data                 = $request->post();
+        $data                 = $request->getPost();
         $data['username']     = $identity->getUsername();
         $data['email']        = $identity->getEmail();
         $data['display_name'] = $identity->getDisplayName();
@@ -89,7 +89,7 @@ class PeepController extends ActionController
         }
 
         $request  = $this->getRequest();
-        $page = $request->query()->get('page', 1);
+        $page = $request->getQuery()->get('page', 1);
 
         return array(
             'username' => $username,

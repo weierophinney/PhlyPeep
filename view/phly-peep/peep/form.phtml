@@ -10,8 +10,7 @@ echo $this->form()->openTag($form);
 
 $peepElement = $form->get('peep_text');
 $peepElement->setAttribute('class', 'span4');
-echo $label->openTag() . $this->escape($peepElement->getAttribute('label')) . $label->closeTag();
-echo $this->formTextarea($peepElement);
+echo $this->formRow($peepElement);
 echo $this->formInput($form->get('secure'));
 ?>
 <br />

@@ -7,7 +7,7 @@ if (!isset($this->username)) {
 ?>
 <div class="row">
     <div class="span12">
-        <h2>Peeps for <?php echo $this->escape($this->username) ?></h2>
+        <h2>Peeps for <?php echo $this->escapeHtml($this->username) ?></h2>
     </div>
 </div>
 

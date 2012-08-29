@@ -23,7 +23,7 @@ class PeepText extends AbstractHelper
 
     public function __invoke($text)
     {
-        $text = $this->view->escape($text);
+        $text = $this->view->escapeHtml($text);
         $text = $this->filterLinks($text);
         return $text;
     }

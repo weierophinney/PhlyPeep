@@ -14,7 +14,7 @@ $url      = $this->url('phly-peep/user', array('username' => $username));
         $displayName = $this->peep->getDisplayName();
         $displayName = $displayName ?: $username;
     ?>
-        <h4><a href="<?php echo $url ?>"><?php echo $this->escape($displayName) ?></a> <small>@<?php echo $this->escape($username) ?></small></h4>
+        <h4><a href="<?php echo $url ?>"><?php echo $this->escapeHtml($displayName) ?></a> <small>@<?php echo $this->escapeHtml($username) ?></small></h4>
         <p><?php echo $this->peepText($peep->getPeepText()) ?></p>
         <div class="row">
             <div class="span5 date">

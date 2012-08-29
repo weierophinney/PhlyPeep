@@ -2,35 +2,61 @@
 
 namespace PhlyPeep\Model;
 
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
+use Zend\Form\Annotation;
 use Zend\Stdlib\ArraySerializableInterface;
 
-class PeepEntity implements 
-    ArraySerializableInterface,
-    InputFilterAwareInterface
+/**
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ArraySerializable")
+ */
+class PeepEntity implements ArraySerializableInterface
 {
     protected $filter;
 
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"Regex", "options": {"pattern": "/^[a-zA-Z0-9]{8}$/"}})
+     * @Annotation\Required(true)
+     */
     protected $identifier;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"Regex", "options": {"pattern": "/^[a-zA-Z0-9_]+$/"}})
+     * @Annotation\Required(true)
+     */
     protected $username;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"EmailAddress", "options": {"domain": false}})
+     * @Annotation\Required(true)
+     */
     protected $email;
+
+    /**
+     * @Annotation\Name("display_name")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Required(false)
+     */
     protected $displayName;
+
+    /**
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"Digits"})
+     * @Annotation\Required(true)
+     */
     protected $timestamp;
+
+    /**
+     * @Annotation\Name("peep_text")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Validator({"name":"StringLength", "options": {"min": 1, "max": 140}})
+     * @Annotation\Required(true)
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Attributes({"placeholder": "What are you thinking now?"})
+     * @Annotation\Options({"label": "What's on your mind?"})
+     */
     protected $peepText;
-
-    public function setInputFilter(InputFilterInterface $filter)
-    {
-        $this->filter = $filter;
-    }
-
-    public function getInputFilter()
-    {
-        if (!$this->filter) {
-            $this->setInputFilter(new PeepFilter());
-        }
-        return $this->filter;
-    }
 
     public function exchangeArray(array $array)
     {

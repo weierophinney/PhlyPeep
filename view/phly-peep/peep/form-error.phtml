@@ -11,16 +11,11 @@ $form->setAttributes(array(
     'action' => $this->url('phly-peep/submit'),
     'class'  => 'well form-vertical',
 ));
-$label = $this->plugin('form_label');
 echo $this->form()->openTag($form);
 
 $peepElement = $form->get('peep_text');
 $peepElement->setAttribute('class', 'span4');
-echo $label->openTag() . $this->escape($peepElement->getAttribute('label')) . $label->closeTag();
-echo $this->formTextarea($peepElement);
-if ($peepElement->getMessages()) {
-    echo '<span class="help-block error">' . $this->formElementErrors($peepElement) . "</span>\n";
-}
+echo $this->formRow($peepElement);
 echo $this->formInput($form->get('secure'));
 ?>
 <br />

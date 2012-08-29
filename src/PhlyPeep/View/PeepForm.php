@@ -22,7 +22,7 @@ class PeepForm extends AbstractHelper
         }
 
         if (null === $form) {
-            $form = new Model\PeepForm();
+            $form = Model\PeepForm::factory();
         }
 
         return $this->view->render($template, array('form' => $form));

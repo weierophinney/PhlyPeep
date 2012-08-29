@@ -2,36 +2,29 @@
 
 namespace PhlyPeep\Model;
 
+use Zend\Form\Annotation\AnnotationBuilder;
 use Zend\Form\Element\Csrf as CsrfElement;
-use Zend\Form\Form;
 
-class PeepForm extends Form
+class PeepForm
 {
-    public function __construct($name = null)
+    public static function factory(PeepEntity $peep = null)
     {
-        parent::__construct($name);
-        $this->setupElements();
-    }
+        if (null === $peep) {
+            $peep = __NAMESPACE__ . '\PeepEntity';
+        }
+        $builder = new AnnotationBuilder();
+        $form = $builder->createForm($peep);
 
-    protected function setupElements()
-    {
-        $this->add(array(
-            'name' => 'peep_text',
-            'attributes' => array(
-                'type'        => 'textarea',
-                'placeholder' => 'What are you thinking now?',
-                'label'       => "What's on your mind?",
-            ),
-        ));
 
-        $this->add(new CsrfElement('secure'));
+        $form->add(new CsrfElement('secure'));
 
-        $this->add(array(
+        $form->add(array(
             'name'       => 'peep',
             'attributes' => array(
                 'type'  => 'submit',
                 'value' => 'Peep!',
             ),
         ));
+        return $form;
     }
 }

@@ -4,14 +4,19 @@ namespace PhlyPeep\Model;
 
 use SplObjectStorage;
 use Zend\Db\Adapter\Adapter;
+use Zend\Db\ResultSet\HydratingResultSet;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\AbstractTableGateway;
+use Zend\Stdlib\Hydrator\ArraySerializable as ArraySerializableHydrator;
 
 class PeepTable extends AbstractTableGateway
 {
+    protected $countPrototype;
+    protected $peepHydrator;
     protected $peepPrototype;
+    protected $peepsPrototype;
     protected $table     = 'peep';
     protected $tableName = 'peep';
 
@@ -19,9 +24,11 @@ class PeepTable extends AbstractTableGateway
     {
         $this->adapter            = $adapter;
         $this->table              = $this->tableName = $tableName;
+        $this->peepHydrator       = new ArraySerializableHydrator();
         $this->peepPrototype      = new PeepEntity;
-        $this->resultSetPrototype = new ResultSet;
-        $this->resultSetPrototype->setReturnType(ResultSet::TYPE_ARRAY);
+        $this->countPrototype     = new ResultSet;
+        $this->peepsPrototype     = new HydratingResultSet($this->peepHydrator, $this->peepPrototype);
+        $this->resultSetPrototype = $this->peepsPrototype;
         $this->initialize();
     }
 
@@ -66,11 +73,10 @@ class PeepTable extends AbstractTableGateway
     public function fetchPeep($identifier)
     {
         $rowset = $this->select(array('identifier' => $identifier));
-        $row    = $rowset->current();
-        if (!$row) {
+        $peep   = $rowset->current();
+        if (!$peep) {
             return false;
         }
-        $peep = $this->getPeepFromRow($row);
         return $peep;
     }
 
@@ -90,18 +96,10 @@ class PeepTable extends AbstractTableGateway
     {
         $resultset = $this->selectWith($select);
         $peeps     = new SplObjectStorage();
-        foreach ($resultset as $row) {
-            $peep = $this->getPeepFromRow($row);
+        foreach ($resultset as $peep) {
             $peeps->attach($peep);
         }
         return $peeps;
-    }
-
-    protected function getPeepFromRow($row)
-    {
-        $peep = clone $this->peepPrototype;
-        $peep->exchangeArray($row);
-        return $peep;
     }
 
     protected function getCountSelect()
@@ -113,11 +111,13 @@ class PeepTable extends AbstractTableGateway
 
     protected function getCountFromSelect($select)
     {
+        $this->resultSetPrototype = $this->countPrototype;
         $resultset = $this->selectWith($select);
         if (!count($resultset)) {
             throw new \DomainException('Unable to determine timeline count!');
         }
         $row = $resultset->current();
+        $this->resultSetPrototype = $this->peepsPrototype;
         return $row['peeps'];
     }
 }

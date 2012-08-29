@@ -10,8 +10,9 @@ class PeepControllerFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $services)
     {
-        $authService = $services->get('zfcuser_auth_service');
-        $peepService = $services->get('phly-peep-service');
+        $allServices = $services->getServiceLocator();
+        $authService = $allServices->get('zfcuser_auth_service');
+        $peepService = $allServices->get('phly-peep-service');
         $controller  = new PeepController();
         $controller->setAuthService($authService);
         $controller->setPeepService($peepService);

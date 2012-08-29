@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
+        "doctrine/common": ">=2.1",
         "zendframework/zendframework": "dev-master",
         "zf-commons/zfc-user": "dev-master"
     },

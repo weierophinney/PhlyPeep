@@ -14,8 +14,9 @@ return array(
                 'options' => array(
                     'route'    => '/peep',
                     'defaults' => array(
-                        'controller' => 'phly-peep',
-                        'action'     => 'index',
+                        '__NAMESPACE__' => 'PhlyPeep\Controller',
+                        'controller'    => 'Peep',
+                        'action'        => 'index',
                     ),
                 ),
                 'may_terminate' => true,
@@ -59,19 +60,23 @@ return array(
             ),
         ),
     ),
-    'controller' => array(
+    'controllers' => array(
         'factories' => array(
-            'phly-peep' => 'PhlyPeep\Service\PeepControllerFactory',
+            'PhlyPeep\Controller\Peep' => 'PhlyPeep\Service\PeepControllerFactory',
         ),
     ),
     'service_manager' => array(
+        'factories' => array(
+            'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',
+            'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
+        ),
+    ),
+    'view_helpers' => array(
         'invokables' => array(
             'peeptext' => 'PhlyPeep\View\PeepText',
         ),
         'factories' => array(
-            'peepform'          => 'PhlyPeep\Service\PeepViewFormFactory',
-            'phly-peep-service' => 'PhlyPeep\Service\PeepServiceFactory',
-            'phly-peep-table'   => 'PhlyPeep\Service\PeepTableFactory',
+            'peepform' => 'PhlyPeep\Service\PeepViewFormFactory',
         ),
     ),
     'view_manager' => array(
