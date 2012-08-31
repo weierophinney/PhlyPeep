@@ -10,8 +10,6 @@ use Zend\Stdlib\ArraySerializableInterface;
  */
 class PeepEntity implements ArraySerializableInterface
 {
-    protected $filter;
-
     /**
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Validator({"name":"Regex", "options": {"pattern": "/^[a-zA-Z0-9]{8}$/"}})
