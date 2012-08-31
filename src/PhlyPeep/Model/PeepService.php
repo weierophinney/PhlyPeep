@@ -3,7 +3,6 @@
 namespace PhlyPeep\Model;
 
 use Zend\Paginator\Adapter\DbSelect;
-use Zend\Paginator\Paginator;
 
 class PeepService
 {
@@ -39,13 +38,17 @@ class PeepService
 
     public function fetchTimeline($page = 1)
     {
-        $paginator = $this->getTimelinePaginator($page);
+        $paginator = $this->table->fetchTimeline();
+        $paginator->setItemCountPerPage($this->getPageSize());
+        $paginator->setCurrentPageNumber($page);
         return $paginator;
     }
 
     public function fetchUserTimeline($user, $page = 1)
     {
-        $paginator = $this->getUserTimelinePaginator($user, $page);
+        $paginator = $this->table->fetchUserTimeline($user);
+        $paginator->setItemCountPerPage($this->getPageSize());
+        $paginator->setCurrentPageNumber($page);
         return $paginator;
     }
 
@@ -57,19 +60,5 @@ class PeepService
     public function insertPeep(PeepEntity $peep)
     {
         $this->table->insertPeep($peep);
-    }
-
-    protected function getTimelinePaginator($page)
-    {
-        $paginator = new Paginator(new DbSelect($this->table->fetchTimeline(), $this->table->getAdapter(), $this->table->getResultSetPrototype()));
-        $paginator->setCurrentPageNumber($page);
-        return $paginator;
-    }
-
-    protected function getUserTimelinePaginator($user, $page)
-    {
-        $paginator = new Paginator(new DbSelect($this->table->fetchUserTimeline($user), $this->table->getAdapter(), $this->table->getResultSetPrototype()));
-        $paginator->setCurrentPageNumber($page);
-        return $paginator;
     }
 }

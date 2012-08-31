@@ -9,13 +9,12 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Where;
 use Zend\Db\TableGateway\AbstractTableGateway;
+use Zend\Paginator\Adapter\DbSelect;
+use Zend\Paginator\Paginator;
 use Zend\Stdlib\Hydrator\ArraySerializable as ArraySerializableHydrator;
 
 class PeepTable extends AbstractTableGateway
 {
-    protected $peepHydrator;
-    protected $peepPrototype;
-    protected $peepsPrototype;
     protected $table     = 'peep';
     protected $tableName = 'peep';
 
@@ -23,11 +22,11 @@ class PeepTable extends AbstractTableGateway
     {
         $this->adapter            = $adapter;
         $this->table              = $this->tableName = $tableName;
-        $this->peepHydrator       = new ArraySerializableHydrator();
-        $this->peepPrototype      = new PeepEntity;
-        $this->peepsPrototype     = new HydratingResultSet($this->peepHydrator, $this->peepPrototype);
-        $this->peepsPrototype->buffer();
-        $this->resultSetPrototype = $this->peepsPrototype;
+        $this->resultSetPrototype = new HydratingResultSet(
+            new ArraySerializableHydrator(),
+            new PeepEntity()
+        );
+        $this->resultSetPrototype->buffer();
         $this->initialize();
     }
 
@@ -35,7 +34,9 @@ class PeepTable extends AbstractTableGateway
     {
         $select = $this->getSql()->select();
         $select->order('timestamp DESC');
-        return $select;
+        return new Paginator(
+            new DbSelect($select, $this->adapter, $this->resultSetPrototype)
+        );
     }
 
     public function fetchUserTimeline($user)
@@ -46,7 +47,9 @@ class PeepTable extends AbstractTableGateway
         $where->equalTo('username', $user);
         $select->where($where)
                ->order('timestamp DESC');
-        return $select;
+        return new Paginator(
+            new DbSelect($select, $this->adapter, $this->resultSetPrototype)
+        );
     }
 
     public function fetchPeep($identifier)
