@@ -49,9 +49,8 @@ class PeepController extends AbstractActionController
             throw new \DomainException('Unknown authenticated user type encountered');
         }
 
-        $peep    = new Model\PeepEntity();
-        $form    = Model\PeepForm::factory($peep);
-        $form->bind($peep);
+        $peep = new Model\PeepEntity();
+        $form = Model\PeepForm::factory($peep);
 
         $request              = $this->getRequest();
         $data                 = $request->getPost();

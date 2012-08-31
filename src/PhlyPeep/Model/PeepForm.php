@@ -12,6 +12,7 @@ class PeepForm
         if (null === $peep) {
             $peep = __NAMESPACE__ . '\PeepEntity';
         }
+
         $builder = new AnnotationBuilder();
         $form = $builder->createForm($peep);
 
@@ -25,6 +26,11 @@ class PeepForm
                 'value' => 'Peep!',
             ),
         ));
+
+        if ($peep instanceof PeepEntity) {
+            $form->bind($peep);
+        }
+
         return $form;
     }
 }
