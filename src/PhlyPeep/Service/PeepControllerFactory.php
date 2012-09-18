@@ -8,11 +8,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class PeepControllerFactory implements FactoryInterface
 {
-    public function createService(ServiceLocatorInterface $services)
+    public function createService(ServiceLocatorInterface $controllers)
     {
-        $allServices = $services->getServiceLocator();
-        $authService = $allServices->get('zfcuser_auth_service');
-        $peepService = $allServices->get('phly-peep-service');
+        $services    = $controllers->getServiceLocator();
+        $authService = $services->get('zfcuser_auth_service');
+        $peepService = $services->get('phly-peep-service');
         $controller  = new PeepController();
         $controller->setAuthService($authService);
         $controller->setPeepService($peepService);
